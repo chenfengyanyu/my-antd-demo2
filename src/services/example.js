@@ -1,4 +1,4 @@
-import request from '../utils/request';
+import request from '/assets/utils/request';
 
 export async function query() {
   return request('/api/users');
