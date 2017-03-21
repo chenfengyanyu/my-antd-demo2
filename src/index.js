@@ -1,26 +1,23 @@
-import './index.html';
-import './index.css';
-import dva from 'dva';
+import './index.html'
+import 'babel-polyfill'
+import dva from 'dva'
+import createLoading from 'dva-loading'
+import { browserHistory } from 'dva/router'
 
 // 1. Initialize
-// const app = dva();
 const app = dva({
-	initialState: {
-		products: [
-			{ name: 'dva', id: 1 },
-			{ name: 'antd', id: 2 },
-		],
-	},
-});
+  ...createLoading(),
+  history: browserHistory,
+  onError(error) {
+    console.error('app onError -- ', error)
+  },
+})
 
-// 2. Plugins
-//app.use({});
+// 2. Model
+app.model(require('./models/app'))
 
-// 3. Model
-app.model(require('./models/products'));
+// 3. Router
+app.router(require('./router'))
 
-// 4. Router
-app.router(require('./router'));
-
-// 5. Start
-app.start('#root');
+// 4. Start
+app.start('#root')
