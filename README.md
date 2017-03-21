@@ -1,23 +1,6 @@
-# Antd Admin
-
-[![React Native](https://img.shields.io/badge/react-^15.4.1-brightgreen.svg?style=flat-square)](https://github.com/facebook/react)
-[![Ant Design](https://img.shields.io/badge/ant--design-^2.7.0-yellowgreen.svg?style=flat-square)](https://github.com/ant-design/ant-design)
-[![dva](https://img.shields.io/badge/dva-^1.1.0-orange.svg?style=flat-square)](https://github.com/dvajs/dva)
-
-[![GitHub issues](https://img.shields.io/github/issues/zuiidea/antd-admin.svg?style=flat-square)](https://github.com/zuiidea/antd-admin)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](https://github.com/zuiidea/antd-admin/pulls)
-[![MIT](https://img.shields.io/dub/l/vibe-d.svg?style=flat-square)](http://opensource.org/licenses/MIT)
-[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com)
-
-演示地址 <http://zuiidea.github.io/antd-admin/>
+# Ant design  demo
 
 ## 特性
-
--   基于[react](https://github.com/facebook/react)，[ant-design](https://github.com/ant-design/ant-design)，[dva](https://github.com/dvajs/dva)，[Mock](https://github.com/nuysoft/Mock) 企业级后台管理系统最佳实践
--   基于[Mock](https://github.com/nuysoft/Mock)实现脱离后端独立开发
--   基于Antd UI 设计语言，提供后台管理系统常见使用场景
--   基于[dva](https://github.com/dvajs/dva)动态加载 Model 和路由，按需加载
--   浅度响应式设计
 
 ## To do list
 
@@ -94,28 +77,3 @@ npm run build
 ```bash
 npm run lint
 ```
-
-### 注意事项
-
--   生产环境中，已有数据接口，请将`src/utils/index.js`第四行 `require('./mock.js')`注释
--   开发环境中，如再mock目录新增文件，请在`src/utils/mock.js`第二行的`mockData`数组中添加
--   如需重写antd样式配置，请修改`src/theme.js`
--   项目配置文件在`src/utils/config.js`
--   如需重写异步请求函数，请修改`src/utils/request.js`
-    （关于为什么使用robe-ajax而不是fetch：在一个无服务器的环境中模拟数据请求，[Mock](https://github.com/nuysoft/Mock)不能拦截Fetch，只能拦截XHR，所以我选了一个类似jquery Ajax的库robe-ajax）
-
-## 参考
-
-用户列表：<https://github.com/dvajs/dva/tree/master/examples/user-dashboard>
-
-dashboard设计稿：<https://dribbble.com/shots/3108122-Dashboard-Admin> （已征得作者同意）
-
-## 截屏
-
-web
-
-![](assets/demo4.gif)
-
-移动
-
-![](assets/demo3.gif)
