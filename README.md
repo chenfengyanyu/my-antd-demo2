@@ -3,23 +3,14 @@
 ## 特性
 
 ## To do list
-
 -   [x] 登录页面
--   [x] dashbord页面
+-   [x] 页面
     -   [x] 数字卡片
     -   [x] 实时天气卡片
     -   [x] 图表
 -   [x] 用户列表页面
     -   [x] 增删改查
     -   [x] 交互动效
--   [x] 扩展UI组件
--   [x] Ico
--   [x] Search
--   [x] dropOption
--   [x] 基于Modal封装的layer
--   [x] 加入dva-loading
--   [x] 规范代码: EsLint; 自用[开发配置](assets/standard.md)
--   [ ] 数据可视化页面
 -   [ ] 模拟消息收发
 -   [ ] 升级dva-cli
 
