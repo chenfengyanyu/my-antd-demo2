@@ -1,12 +1,11 @@
 const Mock = require('mockjs')
 const users = require('../../mock/users')
 const app = require('../../mock/app')
-const dashboard = require('../../mock/dashboard')
-const mockData = [users, app, dashboard]
+const mockData = [users, app]
 
 function serialize(str) {
-  let paramArray = str.split('&')
-  let query = {}
+  const paramArray = str.split('&')
+  const query = {}
   for (let i in paramArray) {
     if (Object.prototype.hasOwnProperty.call(paramArray, i)) {
       query[paramArray[i].split('=')[0]] = paramArray[i].split('=')[1]

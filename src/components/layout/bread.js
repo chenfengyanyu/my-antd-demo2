@@ -3,8 +3,8 @@ import { Breadcrumb, Icon } from 'antd'
 import styles from './main.less'
 import { menu } from '../../utils'
 
-let pathSet = []
-const getPathSet = function (menuArray, parentPath) {
+const pathSet = [];
+function getPathSet(menuArray, parentPath) {
   parentPath = parentPath || '/'
   menuArray.forEach(item => {
     pathSet[(parentPath + item.key).replace(/\//g, '-').hyphenToHump()] = {
@@ -21,7 +21,7 @@ const getPathSet = function (menuArray, parentPath) {
 getPathSet(menu)
 
 function Bread({ location }) {
-  let pathNames = []
+  const pathNames = [];
   location.pathname.substr(1).split('/').forEach((item, key) => {
     if (key > 0) {
       pathNames.push((`${pathNames[key - 1]}-${item}`).hyphenToHump())

@@ -1,7 +1,5 @@
 # Ant design  demo
 
-## 特性
-
 ## To do list
 -   [x] 登录页面
 -   [x] 页面
@@ -14,57 +12,76 @@
 -   [ ] 模拟消息收发
 -   [ ] 升级dva-cli
 
-## 开发及构建
-
 ### 目录结构
-
 ```bash
-├── /mock/           # 数据mock的接口文件
-├── /dist/           # 项目输出目录
-├── /src/            # 项目源码目录
-│ ├── /components/   # 项目组件
-│ ├── /routes/       # 路由组件
-│ ├── /models/       # 数据模型
-│ ├── /services/     # 数据接口
-│ ├── /utils/        # 工具函数
-│ ├── route.js       # 路由配置
-│ ├── index.js       # 入口文件
-│ └── index.html     
-├── package.json     # 项目信息
-└── proxy.config.js  # 数据mock配置
+├── README.md
+├── assets
+│   ├── anrd-admin-dataList.png
+│   ├── anrd-admin-login.png
+│   ├── dashboard.jpg
+│   ├── demo.gif
+│   ├── demo2.gif
+│   ├── demo3.gif
+│   ├── demo4.gif
+│   └── standard.md
+├── dist
+│   ├── _index.html
+│   ├── c7e0e950eb3fe55fe7462c584162a36a.png
+│   ├── dashboard.js
+│   ├── error.js
+│   ├── index.css
+│   ├── index.js
+│   ├── ui-dataTable.js
+│   ├── ui-dropOption.js
+│   ├── ui-ico.js
+│   ├── ui-layer.js
+│   ├── ui-search.js
+│   └── users.js
+├── mock
+│   ├── app.js
+│   └── users.js
+├── node_modules
+├── package.json
+├── proxy.config.js
+├── src
+│   ├── components
+│   ├── index.html
+│   ├── index.js
+│   ├── models
+│   ├── router.js
+│   ├── routes
+│   ├── services
+│   ├── tests
+│   ├── theme.js
+│   └── utils
+└── webpack.config.js
 ```
 
 ### 快速开始
-
 克隆项目文件:
-
-
-```
-git clone https://github.com/zuiidea/antd-admin.git
+```bash
+https://github.com/chenfengyanyu/my-antd-demo2.git
 ```
 
 进入目录安装依赖:
-
-    npm i 或者 yarn install
-
-开发：
-
 ```bash
-npm run dev    # 使用mock拦截请求，数据存储在localStroge里
-
-打开 http://localhost:8000
+npm i
 ```
 
-构建：
+启动项目，打开 http://localhost:8000预览：
+```bash
+npm run start
+```
 
+构建生成dist目录：
 ```bash
 npm run build
-
-将会生成dist目录
 ```
 
-代码检测：
-
+语法测试：
 ```bash
-npm run lint
+npm run test
 ```
+
+参考资源：
+[antd-admin](https://github.com/zuiidea/antd-admin/blob/master/assets/standard.md)

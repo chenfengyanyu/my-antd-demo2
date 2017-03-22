@@ -4,7 +4,7 @@ import { Link } from 'dva/router'
 import { menu } from '../../utils'
 
 const topMenus = menu.map(item => item.key)
-const getMenus = function (menuArray, siderFold, parentPath = '/') {
+function getMenus(menuArray, siderFold, parentPath = '/') {
   return menuArray.map(item => {
     const linkTo = parentPath + item.key
     if (item.child) {
@@ -48,7 +48,7 @@ function Menus({ siderFold, darkTheme, location, handleClickNavMenu, navOpenKeys
     changeOpenKeys(nextOpenKeys)
   }
   // 菜单栏收起时，不能操作openKeys
-  let menuProps = !siderFold ? {
+  const menuProps = !siderFold ? {
     onOpenChange,
     openKeys: navOpenKeys,
   } : {}
