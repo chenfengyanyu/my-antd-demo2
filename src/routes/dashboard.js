@@ -6,7 +6,7 @@ import { color } from '../utils'
 
 function Dashboard({ dashboard }) {
   return (
-    <div>dashboard</div>
+  	<div className="content-inner">dashboard</div>
   )
 }
 
