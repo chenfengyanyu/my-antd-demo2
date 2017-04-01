@@ -1,12 +1,12 @@
 module.exports = [
   {
-    key: 'dashboard',
-    name: '控制面板',
+    key: 'account',
+    name: '个人中心',
     icon: 'laptop',
   },
   {
     key: 'users',
-    name: '用户管理',
+    name: '客户管理',
     icon: 'user',
   },
   {

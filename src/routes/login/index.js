@@ -1,7 +1,7 @@
-import React, { PropTypes } from 'react'
-import { Button, Row, Form, Input } from 'antd'
-import { config } from '../utils'
-import styles from './login.less'
+import React, { PropTypes } from 'react';
+import { Button, Row, Form, Input } from 'antd';
+import { config } from '../../utils';
+import styles from './index.less';
 
 const FormItem = Form.Item
 

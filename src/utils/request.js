@@ -1,19 +1,64 @@
-import Ajax from 'robe-ajax'
+'use strict';
 
-export default function request(url, options) {
-  if (options.cross) {
-    return Ajax.getJSON('http://query.yahooapis.com/v1/public/yql', {
-      q: `select * from json where url='${url}?${Ajax.param(options.data)}'`,
-      format: 'json',
-    })
+import fetch from 'dva/fetch';
+import utils from './cookie';
+
+function parseJSON(response) {
+  return response.json();
+}
+
+function checkStatus(response) {
+  // console.log(response,'response');
+  if (response.status >= 200 && response.status < 300) {
+    return response;
   }
-  return Ajax.ajax({
-    url,
-    method: options.method || 'get',
-    data: options.data || {},
-    processData: options.method === 'get',
-    dataType: 'JSON',
-  }).done((data) => {
-    return data
-  })
+
+  // const error = new Error(response.statusText);
+  // error.statusCode = response.status;
+  // error.response = response;
+  // error.data = response.json();
+  // throw error;
+  return response.json().then((json) => {
+    throw json;
+  });
+}
+
+//全局添加headers，及 sessionID 票据
+function optionsAppend(options){
+  var headers = new Headers();
+  headers.set('Content-Type', 'application/json');
+  headers.set('Accept', 'application/json');
+
+  let userInfo = utils.getCookie('citySessionID');
+  if (userInfo && (typeof userInfo === 'string')) {
+    userInfo = JSON.parse(decodeURIComponent(userInfo));
+    if (userInfo.sessionID) {
+      headers.set('x-session-id', userInfo.sessionID);
+    }
+  }
+
+  var customOptions={
+    method:'GET',
+    credentials: 'include',
+    mode: 'cors',
+    headers:headers
+  };
+
+  return  Object.assign(customOptions, options);  //{...customOptions,...options};
+}
+
+/**
+ * Requests a URL, returning a promise.
+ *
+ * @param  {string} url       The URL we want to request
+ * @param  {object} [options] The options we want to pass to "fetch"
+ * @return {object}           An object containing either "data" or "err"
+ */
+export default function request(url, options) {
+  options = optionsAppend(options);
+  return fetch(url, options)
+      .then(checkStatus)
+      .then(parseJSON)
+      .then((data) => ({ data }))
+      .catch((err) => ({ err }));
 }

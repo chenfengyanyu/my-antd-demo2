@@ -18,18 +18,18 @@ const Routers = function ({ history, app }) {
       getIndexRoute(nextState, cb) {
         require.ensure([], require => {
           // registerModel(app, require('./models/dashboard'))
-          cb(null, { component: require('./routes/dashboard') })
-        }, 'dashboard')
+          cb(null, { component: require('./routes/account/index') })
+        }, 'account')
       },
       childRoutes: [
         {
-          path: 'dashboard',
-          name: 'dashboard',
+          path: 'account',
+          name: 'account',
           getComponent(nextState, cb) {
             require.ensure([], require => {
               // registerModel(app, require('./models/dashboard'))
-              cb(null, require('./routes/dashboard'))
-            }, 'dashboard')
+              cb(null, require('./routes/account/index'))
+            }, 'account')
           },
         }, {
           path: 'users',
@@ -37,7 +37,7 @@ const Routers = function ({ history, app }) {
           getComponent(nextState, cb) {
             require.ensure([], require => {
               // registerModel(app, require('./models/users'))
-              cb(null, require('./routes/users'))
+              cb(null, require('./routes/users/index'))
             }, 'users')
           },
         }, {
@@ -45,7 +45,7 @@ const Routers = function ({ history, app }) {
           name: 'error',
           getComponent(nextState, cb) {
             require.ensure([], require => {
-              cb(null, require('./routes/error'))
+              cb(null, require('./routes/error/index'))
             }, 'error')
           },
         },
