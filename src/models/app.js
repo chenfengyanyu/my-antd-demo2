@@ -6,7 +6,7 @@ export default {
   state: {
     login: true,
     user: {
-      name: '吴彦祖',
+      name: 'test',
     },
     loginButtonLoading: false,
     menuPopoverVisible: false,

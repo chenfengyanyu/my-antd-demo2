@@ -3,6 +3,7 @@ import { Menu, Icon } from 'antd'
 import { Link } from 'dva/router'
 import { menu } from '../../utils'
 
+
 const topMenus = menu.map(item => item.key)
 function getMenus(menuArray, siderFold, parentPath = '/') {
   return menuArray.map(item => {
@@ -17,7 +18,7 @@ function getMenus(menuArray, siderFold, parentPath = '/') {
     return (
       <Menu.Item key={linkTo}>
         <Link to={linkTo}>
-          {item.icon ? <Icon type={item.icon} /> : ''}
+          {item.icon ? <svg style={{fill: '#939393'}} className="icon" aria-hidden="true"><use xlinkHref={`#anticon-${item.icon}`}></use></svg> : ''}
           {siderFold && topMenus.indexOf(item.key) >= 0 ? '' : item.name}
         </Link>
       </Menu.Item>

@@ -1,13 +1,18 @@
 # Ant design  demo
 
-## To do list
--   [x] login
--   [x] views
-    -   [x] 一
-    -   [x] 二
-    -   [x] 三
+## 计划清单
+-   [x] 结构调整（[参考](https://github.com/zuiidea/antd-admin/blob/master/assets/standard.md)）
+-   [x] 去除mock数据
+-   [x] 使用fetch
+-   [x] 登录
+-   [x] 路由
+    -   [x] 配置
+-   [x] 扩展 icon
+-   [  ] 中英文版本
+-   [  ] 引入高德地图
+-   [  ] 引入g2或者echarts
 
-### structure
+### 目录树
 ```bash
 ├── README.md
 ├── assets
@@ -29,7 +34,7 @@
 └── webpack.config.js
 ```
 
-### start
+### 快速开始
 克隆项目文件:
 ```bash
 https://github.com/chenfengyanyu/my-antd-demo2.git
@@ -56,5 +61,5 @@ npm run test
 ```
 
 参考资源：
-[ant design]()
+[ant design](https://ant.design/components/icon-cn/)
 [antd-admin](https://github.com/zuiidea/antd-admin/blob/master/assets/standard.md)

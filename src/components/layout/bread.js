@@ -36,7 +36,7 @@ function Bread({ location }) {
     return (
       <Breadcrumb.Item key={key} {...((pathNames.length - 1 === key) || !pathSet[item].clickable) ? '' : { href: `#${pathSet[item].path}` }}>
         {pathSet[item].icon
-          ? <Icon type={pathSet[item].icon} />
+          ? <svg className="icon" aria-hidden="true"><use xlinkHref={`#anticon-${pathSet[item].icon}`}></use></svg>
           : ''}
         <span>{pathSet[item].name}</span>
       </Breadcrumb.Item>
