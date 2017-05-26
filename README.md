@@ -1,15 +1,18 @@
 # Ant design  demo
 
 ## 计划清单
--   [x] 结构调整（[参考](https://github.com/zuiidea/antd-admin/blob/master/assets/standard.md)）
--   [x] 去除mock数据
+-   [x] 结构调整，按照功能块划分，局部按照业务逻辑划分结构
+-   [x] 去除 mock 数据
 -   [x] 使用fetch
+-   [x] 使用roadhog 替换 doar + atool-build
+-   [x] 样式优化
 -   [x] 登录
 -   [x] 路由
     -   [x] 配置
 -   [x] 扩展 icon
 -   [  ] 中英文版本
--   [  ] 引入高德地图
+-   [  ] 使用高德地图
+-   [  ] 使用谷歌地图
 -   [  ] 引入g2或者echarts
 
 ### 目录树

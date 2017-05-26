@@ -5,7 +5,7 @@ import { connect } from 'dva';
 function Account({ location, dispatch, account, loading }) {
   return (
     <div className="content-inner">
-    account
+    test2
     </div>
   )
 }

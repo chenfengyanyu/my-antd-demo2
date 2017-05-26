@@ -29,7 +29,7 @@ function Header({ user, logout, switchSider, siderFold, isNavbar, menuPopoverVis
         </div>}
 
       <Menu className="header-menu" mode="horizontal" onClick={handleClickMenu}>
-        <SubMenu style={{ float: 'right' }} title={<span> <Icon type="user" />{user.name} </span>}>
+        <SubMenu style={{ float: 'right' }} title={<span className={styles.portrait}>Jartto2 <img alt="user" src="img/user.png" width="30" height="30" /></span>}>
           <Menu.Item key="logout">
             <a>注销</a>
           </Menu.Item>
