@@ -1,5 +1,3 @@
-'use strict';
-
 import fetch from 'dva/fetch';
 import utils from './cookie';
 
@@ -24,12 +22,12 @@ function checkStatus(response) {
 }
 
 //全局添加headers，及 sessionID 票据
-function optionsAppend(options){
-  var headers = new Headers();
+function optionsAppend(options) {
+  let headers = new Headers();
   headers.set('Content-Type', 'application/json');
   headers.set('Accept', 'application/json');
 
-  let userInfo = utils.getCookie('citySessionID');
+  let userInfo = utils.getCookie('SmartCitySessionID');
   if (userInfo && (typeof userInfo === 'string')) {
     userInfo = JSON.parse(decodeURIComponent(userInfo));
     if (userInfo.sessionID) {
@@ -37,14 +35,14 @@ function optionsAppend(options){
     }
   }
 
-  var customOptions={
-    method:'GET',
+  const customOptions = {
+    method: 'GET',
     credentials: 'include',
     mode: 'cors',
-    headers:headers
+    headers,
   };
 
-  return  Object.assign(customOptions, options);  //{...customOptions,...options};
+  return Object.assign(customOptions, options);  //{...customOptions,...options};
 }
 
 /**

@@ -57,23 +57,21 @@ function App({ children, location, dispatch, app, loading }) {
   }
 
   return (
-    <div>{login
-        ? <div className={classnames(styles.layout, { [styles.fold]: isNavbar ? false : siderFold }, { [styles.withnavbar]: isNavbar })}>
-          {!isNavbar ? <aside className={classnames(styles.sider, { [styles.light]: !darkTheme })}>
-            <Sider {...siderProps} />
-          </aside> : ''}
-          <div className={styles.main}>
-            <Header {...headerProps} />
-            <Bread location={location} />
-            <div className={styles.container}>
-              <div className={styles.content}>
-                {children}
-              </div>
-            </div>
-            <Footer />
+    <div className={classnames(styles.layout, { [styles.fold]: isNavbar ? false : siderFold }, { [styles.withnavbar]: isNavbar })}>
+      {!isNavbar ? <aside className={classnames(styles.sider, { [styles.light]: !darkTheme })}>
+        <Sider {...siderProps} />
+      </aside> : ''}
+      <div className={styles.main}>
+        <Header {...headerProps} />
+        <Bread location={location} />
+        <div className={styles.container}>
+          <div className={styles.content}>
+            {children}
           </div>
         </div>
-        : <div className={styles.spin}><Spin tip="加载用户信息..." spinning={loading} size="large"><Login {...loginProps} /></Spin></div>}</div>
+        <Footer />
+      </div>
+    </div>
   )
 }
 

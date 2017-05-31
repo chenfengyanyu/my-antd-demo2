@@ -1,9 +1,9 @@
-import React, { PropTypes } from 'react'
-import { Menu, Icon, Popover } from 'antd'
-import styles from './main.less'
-import Menus from './menu'
+import React, { PropTypes } from 'react';
+import { Menu, Icon, Popover } from 'antd';
+import styles from './main.less';
+import Menus from './menu';
 
-const SubMenu = Menu.SubMenu
+const SubMenu = Menu.SubMenu;
 
 function Header({ user, logout, switchSider, siderFold, isNavbar, menuPopoverVisible, location, switchMenuPopover, navOpenKeys, changeOpenKeys }) {
   let handleClickMenu = e => e.key === 'logout' && logout()
@@ -52,4 +52,4 @@ Header.propTypes = {
   changeOpenKeys: PropTypes.func,
 }
 
-export default Header
+export default Header;

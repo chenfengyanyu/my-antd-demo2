@@ -1,6 +1,7 @@
-import React, { PropTypes } from 'react'
-import { Router } from 'dva/router'
-import App from './routes/app'
+import React, { PropTypes } from 'react';
+import { Router } from 'dva/router';
+import App from './routes/app';
+import Login from './routes/login';
 
 const cached = {}
 const registerModel = (app, model) => {
@@ -13,6 +14,14 @@ const registerModel = (app, model) => {
 const Routers = function ({ history, app }) {
   const routes = [
     {
+      path: '/login',
+      component: Login,
+      getIndexRoute(nextState, cb) {
+        require.ensure([], require => {
+          cb(null, { component: require('./routes/login/') });
+        }, 'login');
+      },
+    }, {
       path: '/',
       component: App,
       getIndexRoute(nextState, cb) {

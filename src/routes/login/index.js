@@ -26,7 +26,7 @@ const login = ({
     <div className={styles.form}>
       <div className={styles.logo}>
         <img alt={'logo'} src={config.logoSrc} />
-        <span>Ant Design</span>
+        <span>Smart City</span>
       </div>
       <form>
         <FormItem hasFeedback>
@@ -54,10 +54,7 @@ const login = ({
             登录
           </Button>
         </Row>
-        <p>
-          <span>账号：guest</span>
-          <span>密码：guest</span>
-        </p>
+        <p>Smart City All Right Reserved © 2017</p>
       </form>
     </div>
   )

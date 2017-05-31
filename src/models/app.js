@@ -1,102 +1,151 @@
-import { login, userInfo, logout } from '../services/app';
+import { login, logout, getUserInfo, switchAccount, quitAccount } from '../services/login';
 import { parse } from 'qs';
+import { message } from 'antd';
+import { routerRedux } from 'dva/router';
+import utils from '../utils/cookie';
 
 export default {
   namespace: 'app',
   state: {
-    login: true,
-    user: {
-      name: 'test',
-    },
+    user: {},
+    isLogin: false,
     loginButtonLoading: false,
     menuPopoverVisible: false,
-    siderFold: localStorage.getItem('antdAdminSiderFold') === 'true',
-    darkTheme: localStorage.getItem('antdAdminDarkTheme') !== 'false',
+    darkTheme: true,
+    siderFold: false,
     isNavbar: document.body.clientWidth < 769,
+    controllFlag: false,
     navOpenKeys: JSON.parse(localStorage.getItem('navOpenKeys') || '[]'),
   },
   subscriptions: {
-    setup({ dispatch }) {
-      dispatch({ type: 'queryUser' })
+    setup({ dispatch, history }) {
+      history.listen((location) => {
+        if (location.pathname !== '/login') {
+          dispatch({ type: 'is_login', payload: {} });
+        }
+      });
       window.onresize = () => {
-        dispatch({ type: 'changeNavbar' })
+        dispatch({ type: 'changeNavbar' });
       }
     },
   },
   effects: {
-    *login({
-      payload,
-    }, { call, put }) {
-      yield put({ type: 'showLoginButtonLoading' })
-      const data = yield call(login, parse(payload))
-      if (data.success) {
+    * login({ payload }, { call, put }) {
+      yield put({ type: 'showLoginButtonLoading' });
+      const results = yield call(login, parse(payload));
+      if (results.data && results.data.errcode === 0) {
         yield put({
           type: 'loginSuccess',
           payload: {
-            user: {
-              name: payload.username,
-            },
-          } })
-      } else {
-        yield put({
-          type: 'loginFail',
-        })
-      }
-    },
-    *queryUser({
-      payload,
-    }, { call, put }) {
-      const data = yield call(userInfo, parse(payload))
-      if (data.success) {
-        yield put({
-          type: 'loginSuccess',
-          payload: {
-            user: {
-              name: data.username,
-            },
+            user: results.data.data,
           },
         })
+        document.cookie = `SmartCitySessionID=${encodeURIComponent(JSON.stringify(results.data.data))}`;
+        let path = location.search.split('=')[1];
+        if (path) {
+          yield put(routerRedux.replace(`/${path.replace('%2F', '')}`));
+        } else {
+          yield put(routerRedux.replace('/'));
+        }
+      } else {
+        yield put({ type: 'hideLoginButtonLoading' });
+        results.err && message.error(results.err.errmsg, 3);
+        yield put(routerRedux.replace('/login'));
       }
     },
-    *logout({
-      payload,
-    }, { call, put }) {
-      const data = yield call(logout, parse(payload))
-      if (data.success) {
+    * is_login(payload, { call, put, select }) {
+      const isLogin = !!utils.getCookie('SmartCitySessionID');
+      if (!isLogin) {
+        message.warning('Login expired, please re-login.', 3);
         yield put({
           type: 'logoutSuccess',
+          payload: {},
+        })
+      } else {
+        let userInfo = utils.getCookie('SmartCitySessionID');
+        if (typeof userInfo === 'string') {
+          yield put({
+            type: 'updateUserInfo',
+            payload: {
+              user: JSON.parse(decodeURIComponent(userInfo)),
+            },
+          });
+        }
+      }
+    },
+    * logout({ payload }, { call, put }) {
+      const { data } = yield call(logout, payload);
+      utils.delCookie('SmartCitySessionID');
+      yield put(routerRedux.replace('/login'));
+      if (data && data.errcode === 0) {
+        yield put({
+          type: 'logoutSuccess',
+          payload: {},
         })
       }
     },
-    *switchSider({
-      payload,
-    }, { put }) {
-      yield put({
-        type: 'handleSwitchSider',
-      })
+    * controll({ payload }, { call, put }) {
+      const { data } = yield call(switchAccount, payload);
+      console.log(data, 'data');
+      if (data && data.errcode === 0) {
+        yield put({
+          type: 'updateUserInfo',
+          payload: {
+            user: data.data,
+          },
+        });
+        document.cookie = `SmartCitySessionID=${encodeURIComponent(JSON.stringify(data.data))}`;
+        location.reload();
+        yield put(routerRedux.replace('/'));
+      } else {
+        message.warning('Invalid access permission!', 3);
+      }
     },
-    *changeTheme({
-      payload,
-    }, { put }) {
-      yield put({
-        type: 'handleChangeTheme',
-      })
+    * deleteControll({ payload }, { call, put }) {
+      const { data } = yield call(quitAccount, payload);
+      if (data && data.errcode === 0) {
+        yield put({
+          type: 'updateUserInfo',
+          payload: {
+            user: data.data,
+          },
+        });
+        document.cookie = `SmartCitySessionID=${encodeURIComponent(JSON.stringify(data.data))}`;
+        // yield put(routerRedux.push('/'));
+        location.reload();
+      } else {
+        message.warning('System busy, please try again!', 3);
+      }
     },
-    *changeNavbar({
-      payload,
-    }, { put }) {
+    * updateInfo({ payload }, { call, put }) {
+      const { data } = yield call(getUserInfo, payload);
+      if (data && data.errcode === 0) {
+        let temp = data.data;
+        yield put({
+          type: 'updateUserInfo',
+          payload: {
+            user: temp,
+          },
+        })
+        Object.assign(temp, { sessionID: payload });
+        document.cookie = `SmartCitySessionID=${encodeURIComponent(JSON.stringify(temp))}`;
+      } else {
+        data && message.error(data.errmsg, 3);
+        // yield put(routerRedux.replace('/login'));
+      }
+    },
+    * switchSider({ payload }, { put }) {
+      yield put({ type: 'handleSwitchSider' })
+    },
+    * changeNavbar({ payload }, { put }) {
       if (document.body.clientWidth < 769) {
         yield put({ type: 'showNavbar' })
       } else {
         yield put({ type: 'hideNavbar' })
       }
     },
-    *switchMenuPopver({
-      payload,
-    }, { put }) {
-      yield put({
-        type: 'handleSwitchMenuPopver',
-      })
+    * switchMenuPopver({ payload }, { put }) {
+      yield put({ type: 'handleSwitchMenuPopver' })
     },
   },
   reducers: {
@@ -104,21 +153,28 @@ export default {
       return {
         ...state,
         ...action.payload,
-        login: true,
         loginButtonLoading: false,
+        isLogin: true,
       }
     },
-    logoutSuccess(state) {
+    logoutSuccess(state, action) {
       return {
         ...state,
-        login: false,
+        user: {},
+        isLogin: false,
       }
     },
-    loginFail(state) {
+    updateUserInfo(state, action) {
       return {
         ...state,
-        login: false,
-        loginButtonLoading: false,
+        ...action.payload,
+        isLogin: true,
+      }
+    },
+    resetUserInfo(state, action) {
+      return {
+        ...state,
+        user: action.payload,
       }
     },
     showLoginButtonLoading(state) {
@@ -127,18 +183,16 @@ export default {
         loginButtonLoading: true,
       }
     },
+    hideLoginButtonLoading(state) {
+      return {
+        ...state,
+        loginButtonLoading: false,
+      }
+    },
     handleSwitchSider(state) {
-      localStorage.setItem('antdAdminSiderFold', !state.siderFold)
       return {
         ...state,
         siderFold: !state.siderFold,
-      }
-    },
-    handleChangeTheme(state) {
-      localStorage.setItem('antdAdminDarkTheme', !state.darkTheme)
-      return {
-        ...state,
-        darkTheme: !state.darkTheme,
       }
     },
     showNavbar(state) {
